@@ -5,6 +5,7 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
+const loadMoreBtn = document.querySelector('.load-more');
 
 const lightbox = new SimpleLightbox('.gallery a');
 
@@ -16,7 +17,7 @@ export function renderImages(images) {
   if (images.length === 0) {
     iziToast.error({
       message:
-        'Sorry, there are no images matching your search query.Please try again!',
+        'Sorry, there are no images matching your search query. Please try again!',
       messageColor: '#fff',
       backgroundColor: '#ef4040',
       position: 'topRight',
@@ -35,7 +36,7 @@ export function renderImages(images) {
         comments,
         downloads,
       }) => `
-       <li class="gallery-item">
+        <li class="gallery-item">
             <a href="${largeImageURL}">
                 <img src="${webformatURL}" alt="${tags}" loading="lazy">
             </a>
@@ -72,4 +73,21 @@ export function showLoader() {
 
 export function hideLoader() {
   loader.classList.add('hidden');
+}
+
+export function showLoadMore() {
+  loadMoreBtn.classList.remove('hidden');
+}
+
+export function hideLoadMore() {
+  loadMoreBtn.classList.add('hidden');
+}
+
+// Функція для прокручування вниз
+export function smoothScroll() {
+  const galleryItem = document.querySelector('.gallery-item');
+  if (galleryItem) {
+    const { height } = galleryItem.getBoundingClientRect();
+    window.scrollBy({ top: height * 2, behavior: 'smooth' });
+  }
 }
